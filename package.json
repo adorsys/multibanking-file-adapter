@@ -1,0 +1,107 @@
+{
+  "name": "multi-banking-file-adapter",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "dist/multi-banking-file-adapter.umd.js",
+  "module": "dist/multi-banking-file-adapter.es5.js",
+  "typings": "dist/types/multi-banking-file-adapter.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "gradorsys <gra@adorsys.de>",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "api": "micro-dev test/api/index.js",
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "start": "rollup -c rollup.config.ts -w",
+    "test": "npm run build && nyc ava",
+    "test:watch": "ava --watch",
+    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
+    "deploy-docs": "ts-node tools/gh-pages-publish",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release",
+    "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write --no-semi --single-quote",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
+  },
+  "ava": {
+    "files": [
+      "test/*.test.js",
+      "test/crypto-codecs/*.test.js",
+      "test/stores/*.test.js",
+      "test/repositories/*.test.js"
+    ],
+    "sources": [
+      "dist/**/*.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.0",
+    "@types/node": "^9.3.0",
+    "ava": "1.0.0-beta.3",
+    "colors": "^1.1.2",
+    "commitizen": "^2.9.6",
+    "coveralls": "^3.0.0",
+    "cross-env": "^5.0.1",
+    "cuid": "2.1.1",
+    "cz-conventional-changelog": "^2.0.0",
+    "husky": "^0.14.0",
+    "lint-staged": "^7.0.0",
+    "lodash.camelcase": "^4.3.0",
+    "marked-terminal": "2.0.0",
+    "micro": "9.1.4",
+    "micro-cors": "0.1.0",
+    "micro-dev": "2.2.2",
+    "micro-visualize": "3.0.1",
+    "microrouter": "3.1.1",
+    "nyc": "11.6.0",
+    "prettier": "^1.4.4",
+    "prompt": "^1.0.0",
+    "replace-in-file": "^3.0.0-beta.2",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.57.0",
+    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.11.1",
+    "semantic-release": "^15.0.0",
+    "test-listen": "1.1.0",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.1.0",
+    "tslint-config-standard": "^7.0.0",
+    "typedoc": "^0.11.0",
+    "typescript": "^2.6.2",
+    "validate-commit-msg": "^2.12.2"
+  },
+  "dependencies": {
+    "axios": "0.18.0",
+    "node-jose": "0.11.0",
+    "node-localstorage": "1.3.0"
+  }
+}
