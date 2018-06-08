@@ -1,7 +1,9 @@
+import Repository from '../../src/Repository'
+
 const { send, json } = require('micro')
 
-module.exports = repository => async (req, res) => {
-  const { key } = await json(req)
+export default (repository: Repository) => async (req, res) => {
+  const { key } = await json(req)
   const value = await repository.get(key)
   if (value === null) {
     send(res, 204)

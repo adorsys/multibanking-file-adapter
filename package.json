@@ -22,10 +22,9 @@
     "api": "micro-dev test/api/index.js",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "build": "tsc && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
     "start": "rollup -c rollup.config.ts -w",
-    "test": "npm run build && nyc ava",
-    "test:watch": "ava --watch",
+    "test": "tsc && nyc ava --verbose",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
@@ -49,21 +48,10 @@
       "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
     }
   },
-  "ava": {
-    "files": [
-      "test/*.test.js",
-      "test/crypto-codecs/*.test.js",
-      "test/stores/*.test.js",
-      "test/repositories/*.test.js"
-    ],
-    "sources": [
-      "dist/**/*.js"
-    ]
-  },
   "devDependencies": {
     "@types/jest": "^22.0.0",
     "@types/node": "^9.3.0",
-    "ava": "1.0.0-beta.3",
+    "ava": "1.0.0-beta.5.1",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
     "coveralls": "^3.0.0",

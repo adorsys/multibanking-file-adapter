@@ -16,7 +16,7 @@ export default class CachedRepository implements Repository {
     }
     const value = await this.repository.get(key, defaultValue)
     if (value !== null) {
-      this.cache.set(key, value)
+      await this.cache.set(key, value)
       return value
     }
     return defaultValue || null

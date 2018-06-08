@@ -13,6 +13,5 @@ import test from 'ava'
 //   t.true(adapter instanceof Object)
 // })
 test('MultiBankingFileAdapter', t => {
-
   t.true(true)
 })
